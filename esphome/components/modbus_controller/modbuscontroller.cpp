@@ -65,7 +65,7 @@ bool ModbusController::send_next_command_() {
 // Queue incoming response
 void ModbusController::on_modbus_data(const std::vector<uint8_t> &data) {
   auto &current_command = this->command_queue_.front();
-  ESP_LOGW(TAG, "arda-Modbus on_modbus_data Byte  %d (0X%x)", data, data);
+  
   if (current_command != nullptr) {
     // Move the commandItem to the response queue
     current_command->payload = data;
@@ -102,7 +102,7 @@ void ModbusController::on_modbus_error(uint8_t function_code, uint8_t exception_
 void ModbusController::on_register_data(ModbusFunctionCode function_code, uint16_t start_address,
                                         const std::vector<uint8_t> &data) {
   ESP_LOGD(TAG, "data for register address : 0x%X : ", start_address);
-
+ESP_LOGW(TAG, "arda-Modbus data for register address : 0x%X : ", start_address);
   auto vec_it = find_if(begin(register_ranges_), end(register_ranges_), [=](RegisterRange const &r) {
     return (r.start_address == start_address && r.register_type == function_code);
   });
