@@ -65,7 +65,7 @@ bool ModbusController::send_next_command_() {
 // Queue incoming response
 void ModbusController::on_modbus_data(const std::vector<uint8_t> &data) {
   auto &current_command = this->command_queue_.front();
-  ESP_LOGV(TAG, "arda-Modbus on_modbus_data Byte  %d (0X%x)", data, data);
+  ESP_LOGC(TAG, "arda-Modbus on_modbus_data Byte  %d (0X%x)", data, data);
   if (current_command != nullptr) {
     // Move the commandItem to the response queue
     current_command->payload = data;
