@@ -255,7 +255,7 @@ size_t ModbusController::create_register_ranges() {
   return register_ranges_.size();
 }
 
-void ModbusController::dump_config() {
+void ModbusController::dump_config() { 
   ESP_LOGCONFIG(TAG, "EPSOLAR:");
   ESP_LOGCONFIG(TAG, "  Address: 0x%02X", this->address_);
   for (auto &item : this->sensormap_) {
