@@ -102,8 +102,9 @@ void ModbusController::on_modbus_error(uint8_t function_code, uint8_t exception_
 void ModbusController::on_register_data(ModbusFunctionCode function_code, uint16_t start_address,
                                         const std::vector<uint8_t> &data) {
   ESP_LOGD(TAG, "data for register address : 0x%X : ", start_address);
-ESP_LOGW(TAG, "arda-Modbus data for register address : 0x%X : ", start_address);
+ESP_LOGW(TAG, "arda-Modbus on_register_data " );
   auto vec_it = find_if(begin(register_ranges_), end(register_ranges_), [=](RegisterRange const &r) {
+    ESP_LOGW(TAG, "arda-Modbus on_register_data address : 0x%X : ", r.start_address );
     return (r.start_address == start_address && r.register_type == function_code);
   });
 
