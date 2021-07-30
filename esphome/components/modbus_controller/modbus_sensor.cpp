@@ -18,7 +18,7 @@ static const char *const TAG = "modbus_sensor";
 template<typename N> N mask_and_shift_by_rightbit(N data, uint32_t mask) {
   auto result = (mask & data);
   if (result == 0) {
-    return result;
+    return result;tu 
   }
   for (int pos = 0; pos < sizeof(N) << 3; pos++) {
     if ((mask & (1 << pos)) != 0)
