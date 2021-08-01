@@ -65,9 +65,13 @@ bool ModbusController::send_next_command_() {
 // Queue incoming response
 void ModbusController::on_modbus_data(const std::vector<uint8_t> &data) {
   auto &current_command = this->command_queue_.front();
+  ESP_LOGW(TAG, "arda: on_modbus_data");
+  for (auto dar : data)  // access by reference to avoid copying
+  {
+    ESP_LOGW(TAG, "arda:  0x%X  ", dar);
+  }
   if (current_command != nullptr) {
     // Move the commandItem to the response queue
-  ESP_LOGD(TAG, "on_modbus_data  size: %zu" , data.size());
     current_command->payload = data;
     this->incoming_queue_.push(std::move(current_command));
     ESP_LOGD(TAG, "Modbus respone queued");
@@ -102,9 +106,9 @@ void ModbusController::on_modbus_error(uint8_t function_code, uint8_t exception_
 void ModbusController::on_register_data(ModbusFunctionCode function_code, uint16_t start_address,
                                         const std::vector<uint8_t> &data) {
   ESP_LOGD(TAG, "data for register address : 0x%X : ", start_address);
-ESP_LOGW(TAG, "arda-Modbus on_register_data " );
+  ESP_LOGW(TAG, "arda-Modbus on_register_data ");
   auto vec_it = find_if(begin(register_ranges_), end(register_ranges_), [=](RegisterRange const &r) {
-    ESP_LOGW(TAG, "arda-Modbus on_register_data address : 0x%X : ", r.start_address );
+    ESP_LOGW(TAG, "arda-Modbus on_register_data address : 0x%X : ", r.start_address);
     return (r.start_address == start_address && r.register_type == function_code);
   });
 
@@ -255,7 +259,7 @@ size_t ModbusController::create_register_ranges() {
   return register_ranges_.size();
 }
 
-void ModbusController::dump_config() { 
+void ModbusController::dump_config() {
   ESP_LOGCONFIG(TAG, "EPSOLAR:");
   ESP_LOGCONFIG(TAG, "  Address: 0x%02X", this->address_);
   for (auto &item : this->sensormap_) {
