@@ -78,6 +78,7 @@ void ModbusController::on_modbus_data(const std::vector<uint8_t> &data) {
     sending_ = false;
     command_queue_.pop_front();
   }
+  ESP_LOGW(TAG, "arda: on_modbus_data done");
 }
 
 // Dispatch the response to the registered handler
