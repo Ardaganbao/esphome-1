@@ -38,7 +38,7 @@ class ModbusSlave : public uart::UARTDevice, public Component {
 
 uint16_t crc16(const uint8_t *data, uint8_t len);
 
-class ModbusSlaveDevice {
+class ModbusSlaveDevice :     public Component{
  public:
   void set_parent(ModbusSlave *parent) { parent_ = parent; }
   void set_address(uint8_t address) { address_ = address; }
