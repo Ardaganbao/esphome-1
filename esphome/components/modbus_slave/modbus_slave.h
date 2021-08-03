@@ -26,11 +26,12 @@ class ModbusSlave : public uart::UARTDevice, public Component {
 
   void set_flow_control_pin(GPIOPin *flow_control_pin) { this->flow_control_pin_ = flow_control_pin; }
 
+  void registerdevice(ModbusSlaveDevice *device);
+
  protected:
   GPIOPin *flow_control_pin_{nullptr};
 
-  bool parse_modbus_byte_(uint8_t byte);
-  void registerdevice(ModbusSlaveDevice *device);
+  bool parse_modbus_byte_(uint8_t byte);  
   
   std::vector<uint8_t> rx_buffer_;
   uint32_t last_modbus_byte_{0};
