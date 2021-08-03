@@ -126,6 +126,8 @@ void ModbusSlave::send(uint8_t address, uint8_t function, uint16_t start_address
   if (this->flow_control_pin_ != nullptr)
     this->flow_control_pin_->digital_write(false);
 }
-
+void  ModbusSlave::registerdevice(ModbusSlaveDevice *device){
+	ESP_LOGW(TAG, "registerdevice:");
+}
 }  // namespace modbus_slave
 }  // namespace esphome

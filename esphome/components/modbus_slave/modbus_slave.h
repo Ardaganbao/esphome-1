@@ -30,7 +30,8 @@ class ModbusSlave : public uart::UARTDevice, public Component {
   GPIOPin *flow_control_pin_{nullptr};
 
   bool parse_modbus_byte_(uint8_t byte);
-
+  void registerdevice(ModbusSlaveDevice *device);
+  
   std::vector<uint8_t> rx_buffer_;
   uint32_t last_modbus_byte_{0};
   std::vector<ModbusSlaveDevice *> devices_;
