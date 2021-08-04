@@ -6,12 +6,14 @@ namespace modbus_slave {
 
 static const char *const TAG = "modbus_slave";
 
-void ModbusSlave::setup() {
+void ModbusSlaveESP::setup() {
+
+  
   if (this->flow_control_pin_ != nullptr) {
     this->flow_control_pin_->setup();
   }
 }
-void ModbusSlave::loop() {
+void ModbusSlaveESP::loop() {
   const uint32_t now = millis();
   if (now - this->last_modbus_byte_ > 50) {
     this->rx_buffer_.clear();
@@ -45,7 +47,7 @@ uint16_t crc16(const uint8_t *data, uint8_t len) {
   return crc;
 }
 
-bool ModbusSlave::parse_modbus_byte_(uint8_t byte) {
+bool ModbusSlaveESP::parse_modbus_byte_(uint8_t byte) {
   size_t at = this->rx_buffer_.size();
   this->rx_buffer_.push_back(byte);
   const uint8_t *raw = &this->rx_buffer_[0];
@@ -76,7 +78,7 @@ bool ModbusSlave::parse_modbus_byte_(uint8_t byte) {
   uint16_t computed_crc = crc16(raw, 3 + data_len);
   uint16_t remote_crc = uint16_t(raw[3 + data_len]) | (uint16_t(raw[3 + data_len + 1]) << 8);
   if (computed_crc != remote_crc) {
-    ESP_LOGW(TAG, "ModbusSlave CRC Check failed! %02X!=%02X", computed_crc, remote_crc);
+    ESP_LOGW(TAG, "ModbusSlaveESP CRC Check failed! %02X!=%02X", computed_crc, remote_crc);
     return false;
   }
 
@@ -97,15 +99,15 @@ bool ModbusSlave::parse_modbus_byte_(uint8_t byte) {
   return false;
 }
 
-void ModbusSlave::dump_config() {
-  ESP_LOGCONFIG(TAG, "ModbusSlave:");
+void ModbusSlaveESP::dump_config() {
+  ESP_LOGCONFIG(TAG, "ModbusSlaveESP:");
   LOG_PIN("  Flow Control Pin: ", this->flow_control_pin_);
 }
-float ModbusSlave::get_setup_priority() const {
+float ModbusSlaveESP::get_setup_priority() const {
   // After UART bus
   return setup_priority::BUS - 1.0f;
 }
-void ModbusSlave::send(uint8_t address, uint8_t function, uint16_t start_address, uint16_t register_count) {
+void ModbusSlaveESP::send(uint8_t address, uint8_t function, uint16_t start_address, uint16_t register_count) {
   uint8_t frame[8];
   frame[0] = address;
   frame[1] = function;
@@ -126,7 +128,7 @@ void ModbusSlave::send(uint8_t address, uint8_t function, uint16_t start_address
   if (this->flow_control_pin_ != nullptr)
     this->flow_control_pin_->digital_write(false);
 }
-void  ModbusSlave::registerdevice(ModbusSlaveDevice *device){
+void  ModbusSlaveESP::registerdevice(ModbusSlaveESPDevice *device){
 	ESP_LOGW(TAG, "registerdevice:");
 }
 }  // namespace modbus_slave
