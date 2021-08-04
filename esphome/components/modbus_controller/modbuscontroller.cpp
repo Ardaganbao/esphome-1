@@ -75,7 +75,7 @@ void ModbusController::on_modbus_data(const std::vector<uint8_t> &data) {
     current_command->payload = data;
     this->incoming_queue_.push(std::move(current_command));
     ESP_LOGD(TAG, "Modbus respone queued");
-    sending_ = false;
+    sending_ = false;  
     command_queue_.pop_front();
   }
   ESP_LOGW(TAG, "arda: on_modbus_data done");
