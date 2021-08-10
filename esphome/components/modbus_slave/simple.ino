@@ -27,6 +27,7 @@
 */
 
 #include "ModbusSlave.h"
+#include <Arduino.h>
 
 #define SLAVE_ID 1           // The Modbus slave ID, change to the ID you want to use.
 #define SERIAL_BAUDRATE 9600 // Change to the baudrate you want to use for Modbus communication.
@@ -38,7 +39,7 @@
 // The position in the array determines the address. Position 0 will correspond to Coil, Discrete input or Input register 0.
 uint8_t input_pins[] = {2, 3, 4};     // Add the pins you want to read as a Discrete input.
 uint8_t output_pins[] = {8, 9, 10};   // Add the pins you want to control via a Coil.
-uint8_t analog_pins[] = {A0, A1, A2}; // Add the pins you want to read as a Input register.
+uint8_t analog_pins[] = {A0 }; // Add the pins you want to read as a Input register.
 
 // You shouldn't have to change anything below this to get this example to work
 

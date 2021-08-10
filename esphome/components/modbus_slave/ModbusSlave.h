@@ -99,8 +99,8 @@ class Modbus
 public:
   Modbus(uint8_t unitAddress = MODBUS_DEFAULT_UNIT_ADDRESS, int transmissionControlPin = MODBUS_CONTROL_PIN_NONE);
   Modbus(ModbusSlave *slaves, uint8_t numberOfSlaves, int transmissionControlPin = MODBUS_CONTROL_PIN_NONE);
-  Modbus(Stream &serialStream, uint8_t unitAddress = MODBUS_DEFAULT_UNIT_ADDRESS, int transmissionControlPin = MODBUS_CONTROL_PIN_NONE);
-  Modbus(Stream &serialStream, ModbusSlave *slaves, uint8_t numberOfSlaves, int transmissionControlPin = MODBUS_CONTROL_PIN_NONE);
+  Modbus(HardwareSerial &serialStream, uint8_t unitAddress = MODBUS_DEFAULT_UNIT_ADDRESS, int transmissionControlPin = MODBUS_CONTROL_PIN_NONE);
+  Modbus(HardwareSerial &serialStream, ModbusSlave *slaves, uint8_t numberOfSlaves, int transmissionControlPin = MODBUS_CONTROL_PIN_NONE);
 
   void begin(uint64_t boudRate);
   void setUnitAddress(uint8_t unitAddress);
@@ -139,12 +139,12 @@ private:
 
   bool _enabled = true;
 
-  Stream &_serialStream;
+  HardwareSerial &_serialStream;
 
 #if defined(SERIAL_TX_BUFFER_SIZE)
   int _serialTransmissionBufferLength = SERIAL_TX_BUFFER_SIZE;
 #else
-  int _serialTransmissionBufferLength = SERIAL_BUFFER_SIZE;
+  int _serialTransmissionBufferLength = 64 ;//SERIAL_BUFFER_SIZE;
 #endif
 
   int _transmissionControlPin = MODBUS_CONTROL_PIN_NONE;
