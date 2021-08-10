@@ -8,8 +8,8 @@ from esphome import pins
 DEPENDENCIES = ["uart"]
 
 modbus_slave_ns = cg.esphome_ns.namespace("modbus_slave")
-ModbusSlave = modbus_slave_ns.class_("ModbusSlave", cg.Component, uart.UARTDevice)
-ModbusSlaveDevice = modbus_slave_ns.class_("ModbusSlaveDevice")
+ModbusSlave = modbus_slave_ns.class_("ModbusSlaveESP", cg.Component, uart.UARTDevice) 
+
 MULTI_CONF = True
 
 CONF_MODBUS_ID = "modbus_slave_id"
@@ -36,20 +36,3 @@ async def to_code(config):
         pin = await gpio_pin_expression(config[CONF_FLOW_CONTROL_PIN])
         cg.add(var.set_flow_control_pin(pin))
 
-
-def modbus_slave_device_schema(default_address):
-    schema = {
-        cv.GenerateID(CONF_MODBUS_ID): cv.use_id(ModbusSlave),
-    }
-    if default_address is None:
-        schema[cv.Required(CONF_ADDRESS)] = cv.hex_uint8_t
-    else:
-        schema[cv.Optional(CONF_ADDRESS, default=default_address)] = cv.hex_uint8_t
-    return cv.Schema(schema)
-
-
-async def register_modbus_slave_device(var, config):
-    parent = await cg.get_variable(config[CONF_MODBUS_ID])
-    cg.add(var.set_parent(parent))
-    cg.add(var.set_address(config[CONF_ADDRESS]))
-    cg.add(parent.register_device(var))

@@ -16,7 +16,8 @@
  */
 
 #ifndef MODBUSSLAVE_H
-#define MODBUSSLAVE_H  
+#define MODBUSSLAVE_H
+#include <Arduino.h>
 
 #define MODBUS_MAX_BUFFER 256
 #define MODBUS_INVALID_UNIT_ADDRESS 255

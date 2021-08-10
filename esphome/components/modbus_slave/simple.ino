@@ -1,7 +1,7 @@
 /*
-    Modbus slave - simple RS485 example
+    ModbusArda slave - simple RS485 example
 
-    Control and Read Arduino I/Os using Modbus RTU.
+    Control and Read Arduino I/Os using ModbusArda RTU.
 
     This sketch shows how you can use the callback vector for reading and
     controlling Arduino I/Os.
@@ -26,7 +26,7 @@
     https://github.com/yaacov/ArduinoModbusSlave
 */
 
-#include <ModbusSlave.h>
+#include "ModbusSlave.h"
 
 #define SLAVE_ID 1           // The Modbus slave ID, change to the ID you want to use.
 #define SERIAL_BAUDRATE 9600 // Change to the baudrate you want to use for Modbus communication.
@@ -91,7 +91,7 @@ void loop()
     slave.poll();
 }
 
-// Modbus handler functions
+// ModbusArda handler functions
 // The handler functions must return an uint8_t and take the following parameters:
 //     uint8_t  fc - function code
 //     uint16_t address - first register/coil address
