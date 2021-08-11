@@ -78,18 +78,42 @@ class ModbusSlaveESP : public uart::UARTDevice, public Component {
 
   void dump_config() override;
 
-  
-
   float get_setup_priority() const override;
- 
+
   void set_flow_control_pin(GPIOPin *flow_control_pin) { this->flow_control_pin_ = flow_control_pin; }
-   
- protected:
-  GPIOPin *flow_control_pin_{nullptr};  
+
+  ModbusCallback *cbVector;
+
   
- 
+  void read_uart();
+
+ protected:
+  GPIOPin *flow_control_pin_{nullptr};
+  uint8_t _requestBuffer[MODBUS_MAX_BUFFER];
+
+  std::vector<uint8_t> rx_buffer_;
+  uint32_t last_modbus_byte_{0};
+
+ bool parse_modbus_byte_(uint8_t byte);
+
+
+
 };
- 
+typedef uint8_t (*ModbusCallback)(uint8_t, uint16_t, uint16_t);
+
+/**
+ * @class ModbusSlave
+ */
+class ModbusSlave {
+ public:
+  ModbusSlave(uint8_t unitAddress = MODBUS_DEFAULT_UNIT_ADDRESS);
+  uint8_t getUnitAddress();
+  void setUnitAddress(uint8_t unitAddress);
+  ModbusCallback cbVector[CB_MAX];
+
+ private:
+  uint8_t _unitAddress = MODBUS_DEFAULT_UNIT_ADDRESS;
+};
 
 /**
  * @class ModbusSlaveFunction
