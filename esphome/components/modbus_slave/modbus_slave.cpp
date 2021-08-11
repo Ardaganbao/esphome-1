@@ -58,11 +58,11 @@ void ModbusSlaveESP::read_uart() {
 
 void ModbusSlaveESP::loop() {
  read_uart();
-
+ 
 }
 bool ModbusSlaveESP::parse_modbus_byte_(uint8_t byte) {
  ESP_LOGW(TAG, "arda: parse_modbus_byte_  0x%X", byte);
-
+return false;
 }
 void ModbusSlaveESP::dump_config() {
   ESP_LOGCONFIG(TAG, "ModbusSlaveESP:");
