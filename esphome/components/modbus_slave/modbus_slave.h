@@ -84,7 +84,7 @@ class ModbusSlaveESP : public uart::UARTDevice, public Component {
 
   ModbusCallback *cbVector;
 
-  
+ 
   void read_uart();
 
  protected:
@@ -100,7 +100,7 @@ class ModbusSlaveESP : public uart::UARTDevice, public Component {
 
 };
 typedef uint8_t (*ModbusCallback)(uint8_t, uint16_t, uint16_t);
-
+ uint8_t readDigitalIn(uint8_t fc, uint16_t address, uint16_t length); 
 /**
  * @class ModbusSlave
  */
