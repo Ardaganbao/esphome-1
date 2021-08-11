@@ -34,7 +34,7 @@ void ModbusSlaveESP::setup() {
  
 
     // Register functions to call when a certain function code is received. 
-    this->cbVector[CB_READ_DISCRETE_INPUTS] = readDigitalIn; 
+  //  this->cbVector[CB_READ_DISCRETE_INPUTS] = readDigitalIn; 
 
 }
 // read any new data from uart
@@ -57,7 +57,7 @@ void ModbusSlaveESP::read_uart() {
 }
 
 void ModbusSlaveESP::loop() {
- read_uart();
+// read_uart();
  
 }
 bool ModbusSlaveESP::parse_modbus_byte_(uint8_t byte) {
