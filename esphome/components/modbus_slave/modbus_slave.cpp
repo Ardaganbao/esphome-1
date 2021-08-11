@@ -5,7 +5,7 @@
 namespace esphome {
 namespace modbus_slave {
 
-uint8_t input_pins[] = {2, 3, 4};  // Add the pins you want to read as a Discrete input.
+uint8_t input_pins[] = {};  // Add the pins you want to read as a Discrete input.
 
 // You shouldn't have to change anything below this to get this example to work
 
